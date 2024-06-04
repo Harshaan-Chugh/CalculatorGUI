@@ -7,6 +7,7 @@ The CalculatorGUI project is a powerful calculator application with a graphical 
 1. `CalculatorGUI` - The main GUI class for the calculator.
 2. `Calculator` - A utility class that handles expression parsing, conversion to postfix notation, and evaluation.
 3. `CalculatorTester` - A command-line tester for the `Calculator` class, useful for testing purposes.
+4. `GraphPlotter` - JavaFX based graphing tool that uses Math Parser (Coming soon?)
 
 ## Features
 
