@@ -4,11 +4,16 @@ import java.util.Stack;
 /**
     The Calculator Class tokenizes the expression, then converts it to postfix,
     (Reverse Polish Notation) and finally evaluates the postfix. Valid expressions
-    include integer expressions, though the evalutaion of the expression will involve double.
+    include integer expressions, though the evaluation of the expression will involve double.
 */
 public class Calculator {
     String expression;
 
+    /**
+     * @param input
+     * Constructs the calculator for the given expression.
+     * Checks if the expression is valid.
+     */
     public Calculator(String input) {
         expression = input.replaceAll(" ", "");
         if (!isValidExpression()) {
@@ -16,10 +21,18 @@ public class Calculator {
         }
     }
 
+    /**
+     * Checks validity of expression.
+     * @return true if valid, false otherwise.
+     */
     private boolean isValidExpression() {
         return hasMatchingParentheses();
     }
 
+    /**
+     * Checks use of parenthesis.
+     * @return true if parenthesis are used appropriately, false otherwise
+     */
     private boolean hasMatchingParentheses() {
         Stack<Character> parenthesesStack = new Stack<>();
         for (char c : expression.toCharArray()) {
@@ -36,6 +49,10 @@ public class Calculator {
         return parenthesesStack.isEmpty();
     }
 
+    /**
+     * Converts the expression input to viable postfix string
+     * @return postfix expression
+     */
     public String convertToPostFix() {
         Stack<String> operators = new Stack<>();
         Stack<String> numbers = new Stack<>();
@@ -48,7 +65,7 @@ public class Calculator {
             if (Character.isDigit(c)) {
                 currentNumber.append(c);
             } else {
-                if (currentNumber.length() > 0) {
+                if (!currentNumber.isEmpty()) {
                     numbers.push(currentNumber.toString());
                     currentNumber.setLength(0);
                 }
@@ -82,7 +99,7 @@ public class Calculator {
             }
         }
 
-        if (currentNumber.length() > 0) {
+        if (!currentNumber.isEmpty()) {
             numbers.push(currentNumber.toString());
         }
 
@@ -98,12 +115,20 @@ public class Calculator {
         return result.toString().trim();
     }
 
+    /**
+     * Helper method to check operator precedence
+     * @return true if op1 higher or equal precedence than op2, false if lower
+     */
     private boolean hasPrecedence(String op1, String op2) {
         int precedenceOp1 = getOperatorPrecedence(op1);
         int precedenceOp2 = getOperatorPrecedence(op2);
         return precedenceOp1 >= precedenceOp2;
     }
 
+    /**
+     * Helper method to get operator precedence
+     * @return precedence number
+     */
     private int getOperatorPrecedence(String operator) {
         return switch (operator) {
             case "+", "-" -> 1;
@@ -113,11 +138,19 @@ public class Calculator {
         };
     }
 
+    /**
+     * Evaluates the expression.
+     * @return result of the evaluation
+     */
     public double evaluate() {
         String postfixExpression = convertToPostFix();
         return evaluatePostFix(postfixExpression);
     }
 
+    /**
+     * Solves the math expression using the postfix expression.
+     * @return evaluated postfix expression
+     */
     public static double evaluatePostFix(String postfix) {
         Stack<Double> stack = new Stack<>();
         String[] tokens = postfix.split("\\s+");
@@ -142,6 +175,10 @@ public class Calculator {
         return stack.pop();
     }
 
+    /**
+     * Helper method that performs the operation.
+     * @return the result of the current operation
+     */
     private static double applyOperator(String operator, double operand1, double operand2) {
         return switch (operator) {
             case "+" -> operand1 + operand2;
@@ -153,6 +190,10 @@ public class Calculator {
         };
     }
 
+    /**
+     * Helper method
+     * @return the result of the trigonometric and other mathematical functions on an operand
+     */
     private static double applyFunction(String function, double operand) {
         return switch (function) {
             case "sin" -> Math.sin(Math.toRadians(operand));
@@ -165,6 +206,10 @@ public class Calculator {
         };
     }
 
+    /**
+     * Helper method that uses recursion to compute a number's factorial.
+     * @return factorial of a number
+     */
     private static double factorial(int n) {
         if (n == 0 || n == 1) {
             return 1;
@@ -172,6 +217,9 @@ public class Calculator {
         return n * factorial(n - 1);
     }
 
+    /**
+     *  Main method for testing
+     */
     public static void main(String[] args) {
         Calculator calculator = new Calculator("3 + sin(30)");
         String postfix = calculator.convertToPostFix();

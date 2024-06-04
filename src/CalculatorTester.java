@@ -3,7 +3,7 @@ import java.util.Scanner;
 /**
     @author Harshaan Chugh
     Tester class for the Calculator class that provides a nice UI.
-    Seperate from the CalculatorGUI.
+    Seperate from CalculatorGUI / meant for testing.
 */
 public class CalculatorTester {
     public static void main(String[] args) {

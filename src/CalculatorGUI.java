@@ -10,14 +10,12 @@ public class CalculatorGUI {
         SwingUtilities.invokeLater(CalculatorGUI::new);
     }
 
-    private final JFrame frame;
     private final JTextField inputField;
     private final JTextArea outputArea;
     private final JScrollPane scrollPane;
-    private Calculator calculator;
 
     public CalculatorGUI() {
-        frame = new JFrame("Calculator");
+        JFrame frame = new JFrame("Calculator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(450, 600);
 
@@ -46,8 +44,8 @@ public class CalculatorGUI {
                 "1", "2", "3", "-",
                 "0", "(", ")", "+",
                 "C", "CE", "=", "^",
-                "sqrt", "log", "cos", "tan",
-                "sin", "!", "Graph"
+                "sqrt", "log", "cos",
+                "tan", "sin", "!"
         };
 
         for (String text : buttons) {
@@ -86,11 +84,10 @@ public class CalculatorGUI {
                 case "C" -> inputField.setText("");
                 case "CE" -> {
                     String currentText = inputField.getText();
-                    if (currentText.length() > 0) {
+                    if (!currentText.isEmpty()) {
                         inputField.setText(currentText.substring(0, currentText.length() - 1));
                     }
                 }
-                case "Graph" -> launchGraphingWindow();
                 default -> inputField.setText(inputField.getText() + command);
             }
         }
@@ -107,7 +104,7 @@ public class CalculatorGUI {
 
     private void evaluateExpression() {
         try {
-            calculator = new Calculator(inputField.getText());
+            Calculator calculator = new Calculator(inputField.getText());
             String postfixExpression = calculator.convertToPostFix();
             double result = calculator.evaluate();
             String outputText = "Expression: " + inputField.getText() + "\nPostfix: " + postfixExpression + "\nResult: " + result + "\n\n";
@@ -123,35 +120,8 @@ public class CalculatorGUI {
                 JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
                 verticalScrollBar.setValue(verticalScrollBar.getMinimum());
             });
-
-            if (outputArea.getLineCount() > 20) {
-                outputArea.setText(removeOldestExpression(outputArea.getText()));
-            }
         } catch (Exception ex) {
             outputArea.setText("Error: " + ex.getMessage() + "\n\n" + outputArea.getText());
         }
-    }
-
-    private String removeOldestExpression(String text) {
-        String[] lines = text.split("\n");
-        StringBuilder newText = new StringBuilder();
-        for (int i = 0; i < lines.length; i++) {
-            if (i < lines.length - 3) {
-                newText.append(lines[i + 3]).append("\n");
-            }
-        }
-        return newText.toString();
-    }
-
-    private void launchGraphingWindow() {
-        String expression = inputField.getText();
-        if (expression.isEmpty()) {
-            JOptionPane.showMessageDialog(frame, "Please enter an expression to graph.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-    
-        new Thread(() -> {
-            GraphPlotter.launch(GraphPlotter.class, expression);
-        }).start();
     }
 }
