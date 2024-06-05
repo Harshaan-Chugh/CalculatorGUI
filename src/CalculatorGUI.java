@@ -42,7 +42,6 @@ public class CalculatorGUI {
     private final JScrollPane outputScrollPane;
     private final JList<String> historyList;
     private final DefaultListModel<String> historyListModel;
-    private final JScrollPane historyScrollPane;
 
     /**
      * Constructs the CalculatorGUI and initializes the components.
@@ -97,7 +96,7 @@ public class CalculatorGUI {
         historyList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         historyList.addListSelectionListener(new HistorySelectionListener());
 
-        historyScrollPane = new JScrollPane(historyList);
+        JScrollPane historyScrollPane = new JScrollPane(historyList);
         historyScrollPane.getVerticalScrollBar().setUnitIncrement(16);
         historyScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
