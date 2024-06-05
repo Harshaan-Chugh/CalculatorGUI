@@ -13,17 +13,6 @@ public class Calculator {
     private static final List<String> history = new ArrayList<>();
 
     /**
-     * Main method for testing
-     */
-    public static void main(String[] args) {
-        Calculator calculator = new Calculator("69 + sin(69)");
-        String postfix = calculator.convertToPostFix();
-        System.out.println("Postfix: " + postfix);
-        double result = calculator.evaluate();
-        System.out.println("Result: " + String.format("%.8f", result));
-    }
-
-    /**
      * @param input Constructs the calculator for the given expression.
      *              Checks if the expression is valid.
      */

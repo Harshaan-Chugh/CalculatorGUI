@@ -220,8 +220,8 @@ public class CalculatorGUI {
                 verticalScrollBar.setValue(verticalScrollBar.getMinimum());
             });
         }
-        catch (Exception ex) {
-            outputArea.setText("Error: " + ex.getMessage() + "\n\n" + outputArea.getText());
+        catch (Exception e) {
+            outputArea.setText("Error: " + e.getMessage() + "\n\n" + outputArea.getText());
         }
     }
 
