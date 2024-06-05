@@ -1,18 +1,31 @@
+import java.util.ArrayList;
 import java.util.EmptyStackException;
+import java.util.List;
 import java.util.Stack;
 
 /**
-    The Calculator Class tokenizes the expression, then converts it to postfix,
-    (Reverse Polish Notation) and finally evaluates the postfix. Valid expressions
-    include integer expressions, though the evaluation of the expression will involve double.
-*/
+ * The Calculator Class tokenizes the expression, then converts it to postfix,
+ * (Reverse Polish Notation) and finally evaluates the postfix. Valid expressions
+ * include integer expressions, though the evaluation of the expression will involve double.
+ */
 public class Calculator {
     String expression;
+    private static final List<String> history = new ArrayList<>();
 
     /**
-     * @param input
-     * Constructs the calculator for the given expression.
-     * Checks if the expression is valid.
+     * Main method for testing
+     */
+    public static void main(String[] args) {
+        Calculator calculator = new Calculator("69 + sin(69)");
+        String postfix = calculator.convertToPostFix();
+        System.out.println("Postfix: " + postfix);
+        double result = calculator.evaluate();
+        System.out.println("Result: " + String.format("%.8f", result));
+    }
+
+    /**
+     * @param input Constructs the calculator for the given expression.
+     *              Checks if the expression is valid.
      */
     public Calculator(String input) {
         expression = input.replaceAll(" ", "");
@@ -23,6 +36,7 @@ public class Calculator {
 
     /**
      * Checks validity of expression.
+     *
      * @return true if valid, false otherwise.
      */
     private boolean isValidExpression() {
@@ -31,6 +45,7 @@ public class Calculator {
 
     /**
      * Checks use of parenthesis.
+     *
      * @return true if parenthesis are used appropriately, false otherwise
      */
     private boolean hasMatchingParentheses() {
@@ -38,10 +53,12 @@ public class Calculator {
         for (char c : expression.toCharArray()) {
             if (c == '(') {
                 parenthesesStack.push(c);
-            } else if (c == ')') {
+            }
+            else if (c == ')') {
                 try {
                     parenthesesStack.pop();
-                } catch (EmptyStackException e) {
+                }
+                catch (EmptyStackException e) {
                     return false;
                 }
             }
@@ -51,6 +68,7 @@ public class Calculator {
 
     /**
      * Converts the expression input to viable postfix string
+     *
      * @return postfix expression
      */
     public String convertToPostFix() {
@@ -94,6 +112,7 @@ public class Calculator {
                         }
                         operators.pop();
                     }
+                    case '!' -> numbers.push(Character.toString(c));
                     default -> throw new IllegalArgumentException("Unsupported character: " + c);
                 }
             }
@@ -117,6 +136,7 @@ public class Calculator {
 
     /**
      * Helper method to check operator precedence
+     *
      * @return true if op1 higher or equal precedence than op2, false if lower
      */
     private boolean hasPrecedence(String op1, String op2) {
@@ -127,6 +147,7 @@ public class Calculator {
 
     /**
      * Helper method to get operator precedence
+     *
      * @return precedence number
      */
     private int getOperatorPrecedence(String operator) {
@@ -140,15 +161,19 @@ public class Calculator {
 
     /**
      * Evaluates the expression.
+     *
      * @return result of the evaluation
      */
     public double evaluate() {
         String postfixExpression = convertToPostFix();
-        return evaluatePostFix(postfixExpression);
+        double result = evaluatePostFix(postfixExpression);
+        addToHistory(expression, postfixExpression, result);
+        return result;
     }
 
     /**
      * Solves the math expression using the postfix expression.
+     *
      * @return evaluated postfix expression
      */
     public static double evaluatePostFix(String postfix) {
@@ -158,16 +183,19 @@ public class Calculator {
         for (String token : tokens) {
             if (token.matches("\\d+")) {
                 stack.push(Double.valueOf(token));
-            } else if (token.matches("[+\\-*/^]")) {
+            }
+            else if (token.matches("[+\\-*/^]")) {
                 double operand2 = stack.pop();
                 double operand1 = stack.pop();
                 double result = applyOperator(token, operand1, operand2);
                 stack.push(result);
-            } else if (token.matches("sin|cos|tan|log|sqrt|!")) {
+            }
+            else if (token.matches("sin|cos|tan|log|sqrt|!")) {
                 double operand = stack.pop();
                 double result = applyFunction(token, operand);
                 stack.push(result);
-            } else {
+            }
+            else {
                 throw new IllegalArgumentException("Invalid token: " + token);
             }
         }
@@ -177,6 +205,7 @@ public class Calculator {
 
     /**
      * Helper method that performs the operation.
+     *
      * @return the result of the current operation
      */
     private static double applyOperator(String operator, double operand1, double operand2) {
@@ -192,9 +221,11 @@ public class Calculator {
 
     /**
      * Helper method
+     *
      * @return the result of the trigonometric and other mathematical functions on an operand
      */
     private static double applyFunction(String function, double operand) {
+        function = function.replaceAll("\\s+", "");
         return switch (function) {
             case "sin" -> Math.sin(Math.toRadians(operand));
             case "cos" -> Math.cos(Math.toRadians(operand));
@@ -208,6 +239,7 @@ public class Calculator {
 
     /**
      * Helper method that uses recursion to compute a number's factorial.
+     *
      * @return factorial of a number
      */
     private static double factorial(int n) {
@@ -218,13 +250,23 @@ public class Calculator {
     }
 
     /**
-     *  Main method for testing
+     * Adds an evaluated expression to the history.
+     *
+     * @param expression Original expression
+     * @param postfix    Reverse Polish form of the expression
+     * @param result     Result of evaluating the expression
      */
-    public static void main(String[] args) {
-        Calculator calculator = new Calculator("3 + sin(30)");
-        String postfix = calculator.convertToPostFix();
-        System.out.println("Postfix: " + postfix);
-        double result = calculator.evaluate();
-        System.out.println("Result: " + result);
+    public static void addToHistory(String expression, String postfix, double result) {
+        history.add("Expression: " + expression + ", Postfix: " + postfix + ", Result: " + String.format("%.8f", result));
     }
+
+    /**
+     * Retrieves the history of evaluated expressions.
+     *
+     * @return A list of strings representing the history.
+     */
+    public static ArrayList<String> getHistory() {
+        return new ArrayList<>(history);
+    }
+
 }
