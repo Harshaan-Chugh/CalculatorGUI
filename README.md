@@ -15,15 +15,14 @@ The CalculatorGUI project is a powerful calculator application with a graphical 
 - Supports exponentiation (`^`) and parentheses for grouping expressions.
 - Additional mathematical functions: square root (`sqrt`), logarithm (`log`), trigonometric functions (`sin`, `cos`, `tan`), and factorial (`!`).
 - Dark mode GUI for a modern and aesthetic appearance.
-- Input validation and error handling.
-- Keyboard and button input support.
-
+- Input validation via keyboard and button panels and thorough error handling.
+- History panel allowing for quick retrieval of past expressions.
 ## Usage
 
 ### Prerequisites
 
 - Java Development Kit (JDK) 8 or higher.
-- An IDE or text editor for Java development (i.e. IntelliJ IDEA, VSCode).
+- An IDE or text editor for Java development
 
 ### Running the GUI Application
 
