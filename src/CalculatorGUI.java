@@ -30,8 +30,6 @@ import java.util.List;
 public class CalculatorGUI {
     /**
      * The main method that starts the calculator application.
-     *
-     * @param args command-line arguments (not used)
      */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(CalculatorGUI::new);
@@ -49,7 +47,7 @@ public class CalculatorGUI {
     public CalculatorGUI() {
         JFrame frame = new JFrame("Calculator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);  // Set initial size to a more balanced width and height
+        frame.setSize(800, 700);
 
         inputField = new JTextField();
         inputField.setFont(new Font("Times", Font.PLAIN, 24));
@@ -68,7 +66,7 @@ public class CalculatorGUI {
         outputScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(7, 4, 10, 10));
+        buttonPanel.setLayout(new GridLayout(8, 4, 10, 10));
 
         String[] buttons = {
                 "7", "8", "9", "/",
@@ -77,7 +75,8 @@ public class CalculatorGUI {
                 "0", "(", ")", "+",
                 "C", "CE", "=", "^",
                 "sqrt", "log", "cos",
-                "tan", "sin", "!"
+                "tan", "sin", "!",
+                "Graph"
         };
 
         for (String text : buttons) {
@@ -126,7 +125,6 @@ public class CalculatorGUI {
         mainPanel.add(splitPane, BorderLayout.CENTER);
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        // Set dark mode colors
         mainPanel.setBackground(Color.BLACK);
         inputField.setBackground(Color.DARK_GRAY);
         inputField.setForeground(Color.WHITE);
@@ -161,6 +159,7 @@ public class CalculatorGUI {
                         inputField.setText(currentText.substring(0, currentText.length() - 1));
                     }
                 }
+                case "Graph" -> launchGraphingTool();
                 default -> inputField.setText(inputField.getText() + command);
             }
         }
@@ -214,7 +213,6 @@ public class CalculatorGUI {
 
             updateHistory();
 
-            // Scroll to the top
             SwingUtilities.invokeLater(() -> {
                 JScrollBar verticalScrollBar = outputScrollPane.getVerticalScrollBar();
                 verticalScrollBar.setValue(verticalScrollBar.getMinimum());
@@ -240,4 +238,10 @@ public class CalculatorGUI {
         }
     }
 
+    /**
+     * Launches the graphing tool.
+     */
+    private void launchGraphingTool() {
+        SwingUtilities.invokeLater(GraphingTool::new);
+    }
 }
