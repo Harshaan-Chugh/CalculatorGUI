@@ -60,9 +60,7 @@ public class GraphingTool extends JFrame {
 
         XYSeries series = new XYSeries("Graph");
 
-        Expression e = new ExpressionBuilder(functionText)
-                .variable("x")
-                .build();
+        Expression e = new ExpressionBuilder(functionText).variable("x").build();
 
         for (double x = rangeStart; x <= rangeEnd; x += 0.1) {
             e.setVariable("x", x);
@@ -72,14 +70,14 @@ public class GraphingTool extends JFrame {
 
         XYSeriesCollection dataset = new XYSeriesCollection(series);
         JFreeChart chart = ChartFactory.createXYLineChart(
-                "Graph",
-                "X-Axis",
-                "Y-Axis",
-                dataset,
-                PlotOrientation.VERTICAL,
-                true,
-                true,
-                false
+            "Graph",
+            "X-Axis",
+            "Y-Axis",
+            dataset,
+            PlotOrientation.VERTICAL,
+            true,
+            true,
+            false
         );
 
         XYPlot plot = chart.getXYPlot();
