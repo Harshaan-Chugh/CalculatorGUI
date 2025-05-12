@@ -1,8 +1,6 @@
 # CalculatorGUI
 
-## Overview
-
-CalculatorGUI is a powerful, accurate graphing calculator built using Java AWT, Swing. It supports basic arithmetic operations along with several additional mathematical functions. The project includes the following classes:
+Graphing calculator built using Java AWT, Swing. It supports basic arithmetic operations along with several additional mathematical functions and includes the following classes:
 
 1. `CalculatorGUI` - The main GUI class for the calculator.
 2. `Calculator` - A utility class that handles expression parsing, conversion to postfix notation, and evaluation.
