@@ -17,12 +17,5 @@ Graphing calculator built using Java AWT, Swing. It supports basic arithmetic op
 - Input validation via keyboard and button panels and thorough error handling.
 - History panel allowing for quick retrieval of past expressions.
 - Graphing Tool: Plot mathematical functions graphically using the integrated graphing tool!
-## Usage
-
-1.. **Compile and run the `CalculatorGUI` class**
-    ```bash
-    javac CalculatorGUI.java
-    java CalculatorGUI
-
-2. The calculator GUI will launch. You can use either the on-screen buttons or your keyboard to enter expressions. Press `Enter` or click `=` to evaluate the expression. Use the "Graph" button to launch the graphing tool and plot your own mathematical functions.
+- You can use either the on-screen buttons or your keyboard to enter expressions. Press `Enter` or click `=` to evaluate the expression. Use the "Graph" button to launch the graphing tool and plot your own mathematical functions.
 ![img_1.png](img_1.png)
